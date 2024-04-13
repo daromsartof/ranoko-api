@@ -15,15 +15,15 @@ name=$2
 case $action in
     "refact")
         new_branch="refactor/$name"
-        git checkout -b "$new_branch"
+        git checkout -b "$new_branch" && git push --set-upstream origin "$new_branch"
         ;;
     "fix")
         new_branch="fix/$name"
-        git checkout -b "$new_branch"
+        git checkout -b "$new_branch" && git push --set-upstream origin "$new_branch"
         ;;
     *)
         new_branch="feature/$name"
-        git checkout -b "$new_branch"
+        git checkout -b "$new_branch" && git push --set-upstream origin "$new_branch"
         ;;
 esac
 
