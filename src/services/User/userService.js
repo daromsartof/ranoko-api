@@ -1,7 +1,14 @@
 import userRepositorie from '../../repositories/User/userRepositorie.js';
-async function createUser() {
-
-  return ;
+import caisseService from '../Caisse/caisseService.js';
+async function createUser(username, password, name) {
+  try {
+    return await caisseService.createCaisse(async (caisse) => {
+      const user = await userRepositorie.createOneUser(username,  password, name, caisse)
+      return user
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 async function getOneUser(userId) {

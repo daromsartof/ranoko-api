@@ -7,55 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model bar {
-  id          Int      @id @default(autoincrement())
-  is_accepted Boolean
-  created_at  DateTime @db.DateTime(0)
-  rano_id     Int
-  rano        rano     @relation(fields: [rano_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "rano_id")
-
-  @@index([rano_id], map: "rano_id")
-}
-
 model caisse {
-  id           Int       @id @default(autoincrement())
-  amount_total Int?
-  created_at   DateTime? @db.DateTime(0)
-  money        money[]
-  user         user[]
-}
-
-model money {
-  id         Int      @id @default(autoincrement())
-  caisse_id  Int?
-  amount     String?  @db.VarChar(50)
-  created_at DateTime @db.DateTime(0)
-  caisse     caisse?  @relation(fields: [caisse_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "money_ibfk_1")
-
-  @@index([caisse_id], map: "caisse_id")
-}
-
-model rano {
-  id         Int      @id @default(autoincrement())
-  quantity   Int
-  created_at DateTime @db.Date
-  user_id    Int
-  bar        bar[]
-  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "rano_ibfk_1")
-
-  @@index([user_id], map: "user_id")
+  id                        Int       @id @default(autoincrement())
+  amout                     Int?      @default(0)
+  created_at                DateTime? @default(now()) @db.DateTime(0)
+  user_id                   Int?      @unique(map: "user_id")
+  user_caisse_user_idTouser user?     @relation("caisse_user_idTouser", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "caisse_ibfk_1")
+  user                      user?
 }
 
 model user {
-  id        Int    @id @default(autoincrement())
-  name      String @db.VarChar(200)
-  user_name String @unique(map: "user_name") @db.VarChar(255)
-  password  String @db.VarChar(255)
-  role      String @db.VarChar(50)
-  caisse_id Int
-  slug      String @unique(map: "slug") @db.VarChar(255)
-  rano      rano[]
-  caisse    caisse @relation(fields: [caisse_id], references: [id], onUpdate: NoAction, map: "caisse")
-
-  @@index([caisse_id], map: "caisse_id")
+  id                          Int      @id @default(autoincrement())
+  name                        String   @db.VarChar(255)
+  username                    String   @unique(map: "username") @db.VarChar(255)
+  password                    String   @db.VarChar(255)
+  role                        String   @default("[\"USER\"]") @db.VarChar(200)
+  created_at                  DateTime @default(now()) @db.DateTime(0)
+  caisse_id                   Int      @unique(map: "caisse_id")
+  slug                        String   @unique(map: "slug") @db.VarChar(255)
+  caisse_caisse_user_idTouser caisse?  @relation("caisse_user_idTouser")
+  caisse                      caisse   @relation(fields: [caisse_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "caisse")
 }
