@@ -8,6 +8,13 @@ const createSlug = (name) => {
     });
 };
 
+const isGrated = (role,requiredRole) => role && JSON.parse(role).includes(requiredRole)
+
+const getRanoPriceByNumber = (number) => {
+    return (process.env.ON_RANO_PRICE || 50) * number
+}
 export default {
-    createSlug
+    createSlug,
+    isGrated,
+    getRanoPriceByNumber
 }

@@ -56,6 +56,11 @@ async function deleteCaisseById(id) {
         }
     )
 }
+/**
+ * 
+ * @param {number} id 
+ * @returns 
+ */
 async function findOnCaisseById(id) {
     return prisma.caisse.findUnique({
         where: {
@@ -64,9 +69,23 @@ async function findOnCaisseById(id) {
     })
 }
 
+/**
+ * 
+ * @param {number} user_id 
+ * @returns 
+ */
+async function findOneCaisseByUser(user_id) {
+    return prisma.caisse.findUnique({
+        where: {
+            user_id
+        }
+    })
+}
+
 export default {
     createOneCaisse,
     updateOnCaiseById,
     findOnCaisseById,
-    deleteCaisseById
+    deleteCaisseById,
+    findOneCaisseByUser
 };

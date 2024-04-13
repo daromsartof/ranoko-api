@@ -1,27 +1,15 @@
-/*import prisma from '../../config/prismaClient.js';
+import prisma from '../../config/prismaClient.js';
 
-async function getRanoByDate(date) {
-    return prisma.rano.findMany({
-        where: {
-            created_at: new Date(date)
-        },
-        include: {
-            user: true,
-            bar: true
-        }
-    })
-}   
-
-async function createRano(user) {
-    return prisma.rano.create({
+async function createRano(number, user_id, responsable_id) {
+    return prisma.rano_nalaiko.create({
         data: {
-
+            number,
+            responsable_id,
+            user_id
         }
     })
 }
 
-
 export default {
-    getRanoByDate
+    createRano
 };
-*/

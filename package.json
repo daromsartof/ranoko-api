@@ -5,9 +5,11 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
+    "script-authorisation": "sudo chmod -R +x ./src/script/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "pulldb": "prisma db pull && prisma generate",
+    "make-branch": "./src/script/gitbaranch.sh",
     "generate": "prisma generate",
     "make-controller": "./src/script/make.sh"
   },

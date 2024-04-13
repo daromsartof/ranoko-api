@@ -32,6 +32,22 @@ async function giveAmountOnACaisse(amount, caisse_id, responsable) {
   }
 }
 
+async function debitCaisse(user_id, debit_amount, responsable) {
+  const caisse = await caisseRepositorie.findOneCaisseByUser(user_id)
+  try {
+    if (!caisse) return {
+      message: "caisse not found"
+    }
+    const newCaisse = await caisseRepositorie.updateOnCaiseById(caisse.id, {
+      amount: caisse.amount - debit_amount
+    })
+    await transactionHistory.addTransactionHistory(debit_amount, 0,responsable, caisse)
+    return newCaisse;
+  } catch (error) {
+    throw error
+  }
+}
+
 async function deleteCaisse() {
 
   return ;
@@ -42,6 +58,7 @@ async function updateCaisse() {
   return ;
 }
 export default {
+  debitCaisse,
     createCaisse,
     giveAmountOnACaisse,
     deleteCaisse,

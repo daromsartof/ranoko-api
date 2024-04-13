@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import userService from '../services/User/userService.js';
+import utilsService from '../services/utilsService.js';
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -21,8 +22,7 @@ const authenticateToken = (req, res, next) => {
 const requireRole = (requiredRole) => {
   return (req, res, next) => {
       const { role } = req.user;  
-      console.log(role);
-      if (role && JSON.parse(role).includes(requiredRole)) {
+      if (utilsService.isGrated(role, requiredRole)) {
           
           next();
       } else {
