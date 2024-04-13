@@ -27,8 +27,16 @@ async function updateOnCaiseById(id, data) {
                 id
             },
             data,
-            include:{
-                user: true
+            select: {
+                id: true,
+                amount: true,
+                transaction_history: true,
+                user: {
+                    select: {
+                        slug: true,
+                        name: true,
+                    }
+                }
             }
         }
     )
@@ -48,9 +56,17 @@ async function deleteCaisseById(id) {
         }
     )
 }
+async function findOnCaisseById(id) {
+    return prisma.caisse.findUnique({
+        where: {
+            id
+        }
+    })
+}
 
 export default {
     createOneCaisse,
     updateOnCaiseById,
+    findOnCaisseById,
     deleteCaisseById
 };

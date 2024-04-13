@@ -5,8 +5,12 @@ async function getUserById(id) {
         where: {
             id
         },
-        include: {
-            caisse: true
+        select: {
+            id:true,
+            role: true,
+            name: true,
+            slug: true,
+            caisse: true 
         }
     })
 };
