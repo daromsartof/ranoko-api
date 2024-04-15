@@ -1,8 +1,9 @@
 import caisseService from '../../services/Caisse/caisseService.js';
-import authService from '../../services/Caisse/caisseService.js ';
 
-async function getCaisse(req, res) {
-
+async function getMeCaisse(req, res) {
+    const user = req.user;
+    const caisse = await caisseService.getCaisseByUserId(user.id);
+    return res.json(caisse);
 }
 
 async function addAmountOnCaisseUser(req, res) {
@@ -19,4 +20,4 @@ async function addAmountOnCaisseUser(req, res) {
 
 
 
-export default { getCaisse, addAmountOnCaisseUser };
+export default { getMeCaisse, addAmountOnCaisseUser };

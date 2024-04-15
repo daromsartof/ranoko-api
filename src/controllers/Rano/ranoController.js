@@ -13,7 +13,7 @@ async function takeWaterAction(req, res) {
     id
   } = req.user
   const caissierGrated = utilsService.isGrated(role, constantService.ROLE.CAISSIER)
-  const user = caissierGrated ? await userService.getOneUser(user_id) : {
+  const user = caissierGrated ? await userService.getOneUser(user_id || 0) : {
     id
   }
   if (caissierGrated && !user) {

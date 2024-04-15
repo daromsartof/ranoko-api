@@ -78,6 +78,11 @@ async function findOneCaisseByUser(user_id) {
     return prisma.caisse.findUnique({
         where: {
             user_id
+        },
+        select: {
+            id: true,
+            amount: true,
+            created_at: true,
         }
     })
 }
