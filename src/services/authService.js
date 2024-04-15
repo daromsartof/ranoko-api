@@ -1,15 +1,12 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from '../config/prismaClient.js';
-import caisseRepositorie from '../repositories/Caisse/caisseRepositorie.js';
-import userRepositorie from '../repositories/User/userRepositorie.js';
+import userService from './User/userService.js';
+
 async function register(user_name, password, name) {
   const hashedPassword = await bcrypt.hash(password, 10);
-  try {
-    const caisse = await caisseRepositorie.createOneCaisse();
-    const user = await userRepositorie.createOneUser(user_name, hashedPassword, name, caisse)
-    
-    return user;
+  try {    
+    return await userService.createUser(user_name, hashedPassword, name);
   } catch (error) {
     console.error(error);
     return error
@@ -17,9 +14,9 @@ async function register(user_name, password, name) {
   
 }
 
-async function login(user_name, password) {
+async function login(username, password) {
   const user = await prisma.user.findUnique({
-    where: { user_name }
+    where: { username }
   });
   if (!user || !(await bcrypt.compare(password, user.password))) {
     throw new Error('Invalid credentials');

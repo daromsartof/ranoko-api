@@ -6,34 +6,28 @@ async function getUserById(id) {
             id
         },
         select: {
+            id:true,
+            role: true,
             name: true,
             slug: true,
-            caisse: {
-                select: {
-                    amount_total: true
-                }
-            },
-            rano: {
-                include: {
-                    bar: true
-                }
-            }
+            caisse: true 
         }
     })
 };
 
-async function createOneUser(user_name, hashedPassword, name, caisse) {
-    return prisma.user.create({
+async function createOneUser(username, hashedPassword, name, caisse) {
+    return await prisma.user.create({
         data: {
-          user_name,
+          username,
           password: hashedPassword,
           name,
-          role: "['User']",
           caisse_id: caisse.id,
           slug: utilsService.createSlug(name)
         }
     });
 }
+
+
 
 export default {
     getUserById,

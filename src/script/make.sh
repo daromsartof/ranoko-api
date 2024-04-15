@@ -24,7 +24,7 @@ cat > ${BASE_DIR}/controllers/${CapitalizedName}/${NAME}Controller.js <<EOF
 import authService from '../../services/${CapitalizedName}/${NAME}Service.js ';
 
 async function get${CapitalizedName}(req, res) {
-
+  return res.json('hello ${CapitalizedName}')
 }
 
 
@@ -67,7 +67,7 @@ import ${NAME}Controller from '../../controllers/${CapitalizedName}/${NAME}Contr
 
 const router = express.Router();
 
-router.post('/get-${NAME}', ${NAME}Controller.get${CapitalizedName});
+router.get('/${NAME}', ${NAME}Controller.get${CapitalizedName});
 
 export default router;
 EOF
