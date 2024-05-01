@@ -10,7 +10,7 @@ async function addAmountOnCaisseUser(req, res) {
     const { amount, caisse_id } = req.body;
     const user = req.user;
     if (!amount || isNaN(parseInt(amount) || !caisse_id || isNaN(parseInt(caisse_id)))) {
-        return res.status(503).json({
+        return res.status(403).json({
             message: "amount is not found or caisse_id is not found"
         })
     }

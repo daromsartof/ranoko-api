@@ -2,13 +2,13 @@ import prisma from '../../config/prismaClient.js';
 
 /**
  * create on cassaise by define default amount
- * @param {number} amout 
+ * @param {number} amount                                                
  * @returns 
  */
-async function createOneCaisse(amout = 0) {
+async function createOneCaisse(amount = 0) {
     return prisma.caisse.create({
         data: {
-            amout,
+            amount,
             created_at: new Date(),
         }
     });

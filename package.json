@@ -11,6 +11,7 @@
     "pulldb": "prisma db pull && prisma generate",
     "make-branch": "./src/script/gitbaranch.sh",
     "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
     "make-controller": "./src/script/make.sh"
   },
   "keywords": [],
