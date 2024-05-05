@@ -10,6 +10,23 @@ async function createRano(number, user_id, responsable_id) {
     })
 }
 
+async function findRanoByUser(user_id) {
+    return prisma.rano_nalaiko.findMany({
+        where: {
+            user_id
+        },
+        include: {
+            user_rano_nalaiko_responsable_idTouser: {
+                select: {
+                    id: true,
+                    name: true
+                }
+            }
+        }
+    })
+}
+
 export default {
-    createRano
+    createRano,
+    findRanoByUser
 };

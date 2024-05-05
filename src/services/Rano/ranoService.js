@@ -1,3 +1,4 @@
+import moment from 'moment';
 import prisma from '../../config/prismaClient.js';
 import ranoRepositorie from '../../repositories/Rano/ranoRepositorie.js';
 import caisseService from '../Caisse/caisseService.js';
@@ -24,9 +25,26 @@ async function takeWaterToday(number, user_id, responsable_id) {
   }
 }
 
-async function readRano() {
+async function myWater(userId) {
+  try {
+    const ranokos = await ranoRepositorie.findRanoByUser(userId)
+    const res = {
+      all: 0,
+      today: 0,
+      details: []
+    }
+    ranokos.map(ranoko => {
+      res.all += ranoko.number
+      if (moment(ranoko.created_at).format("DD/MM/YYYY") === moment(new Date()).format("DD/MM/YYYY")) {
+        res.today += ranoko.number
+      }
+      res.details.push(ranoko)
+    })
 
-  return ;
+    return res
+  } catch (error) {
+    return []
+  }
 }
 
 async function deleteRano() {
@@ -40,7 +58,7 @@ async function updateRano() {
 }
 export default {
     takeWaterToday,
-    readRano,
+    myWater,
     deleteRano,
     updateRano
 };

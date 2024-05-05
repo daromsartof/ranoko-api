@@ -21,7 +21,36 @@ async function deleteTransactionHistoryBy(id) {
     })
 }
 
+async function findHistoryBYUserId(user_id) {
+    return findAllBy({
+        caisse: {
+            user_id
+        }
+    })
+}
+
+async function findAllBy(clause) {
+    return prisma.transaction_history.findMany({
+        where: clause,
+        include: {
+            caisse: {
+                select: {
+                    id: true,
+                    user: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+
 export default {
     addTransactionHistory,
-    deleteTransactionHistoryBy
+    deleteTransactionHistoryBy,
+    findAllBy,
+    findHistoryBYUserId
 }

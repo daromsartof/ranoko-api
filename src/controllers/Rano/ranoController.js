@@ -25,6 +25,13 @@ async function takeWaterAction(req, res) {
   return res.json(rano)
 }
 
+async function myWaterAction(req, res) {
+  const { id } = req.user
+
+  const rano = await ranoService.myWater(id)
+  return res.json(rano)
+}
 
 
-export default { takeWaterAction };
+
+export default { takeWaterAction, myWaterAction };

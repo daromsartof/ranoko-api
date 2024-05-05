@@ -1,3 +1,5 @@
+import transactionHistory from "../../repositories/TransactionHistory/transactionHistory.js"
+
 /**
  * 
  * @param {Array} transactions 
@@ -14,6 +16,16 @@ const transactionHistoryToday = (transactions) => {
     })  
 }
 
+const myTransactionHistory = async (userId) => {
+    try {
+        return transactionHistory.findHistoryBYUserId(userId)
+    } catch (error) {
+        return []
+    }
+   
+}
+
 export default {
-    transactionHistoryToday
+    transactionHistoryToday,
+    myTransactionHistory
 }

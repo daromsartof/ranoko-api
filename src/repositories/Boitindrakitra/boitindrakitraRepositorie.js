@@ -1,11 +1,10 @@
 import prisma from '../../config/prismaClient.js';
+import transactionHistory from '../TransactionHistory/transactionHistory.js';
 
 async function findBoitindrakitra() {
-    return prisma.boit_ndrakitra.findFirst({
-        where: {
-            id: 1
-        }
-    });
+    return transactionHistory.findAllBy({
+        debit: 0
+    })
 }
 
 export default {
